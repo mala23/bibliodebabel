@@ -1,5 +1,5 @@
 /*
-Error: File to import not found or unreadable: vendor/bourbon/base.scss.
+Error: File to import not found or unreadable: vendors/bourbon/bourbon.
        Load paths:
          
         on line 13 of sass/main.scss
@@ -9,7 +9,7 @@ Error: File to import not found or unreadable: vendor/bourbon/base.scss.
 10: // ...
 11: 
 12: // Third-party
-13: @import "vendor/bourbon/base.scss";
+13: @import "vendors/bourbon/bourbon";
 
 Backtrace:
 sass/main.scss:13
@@ -58,4 +58,4 @@ sass/main.scss:13
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: File to import not found or unreadable: vendor/bourbon/base.scss.\A        Load paths:\A          \A         on line 13 of sass/main.scss\A \A 8: // @import \"partials/figures\";\A 9: // @import \"partials/grids\";\A 10: // ...\A 11: \A 12: // Third-party\A 13: @import \"vendor/bourbon/base.scss\";"; }
+  content: "Error: File to import not found or unreadable: vendors/bourbon/bourbon.\A        Load paths:\A          \A         on line 13 of sass/main.scss\A \A 8: // @import \"partials/figures\";\A 9: // @import \"partials/grids\";\A 10: // ...\A 11: \A 12: // Third-party\A 13: @import \"vendors/bourbon/bourbon\";"; }
