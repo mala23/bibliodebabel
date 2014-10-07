@@ -1,4 +1,12 @@
-<section>
+<section id="new-link">
+  <form action="/link" method="post">
+    Uri: <input type="text" name="uri">
+    Title: <input type="text" name="title">
+    <input type="submit" value="Add link">
+  </form>
+</section>
+
+<section id="links">
   <% @links.each do |link| %>
     <li><a href="<%= link.uri %>"><%= link.title %></a></li>
   <% end %>

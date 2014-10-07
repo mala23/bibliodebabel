@@ -29,6 +29,13 @@ class BDB < Sinatra::Base
     erb :index
   end
 
+  post '/link' do
+    uri = params["uri"]
+    title = params["title"]
+    Link.create(:uri => uri, :title => title)
+    redirect to('/')
+  end
+
   # start the server if ruby file executed directly
   run! if app_file == $0
 end
