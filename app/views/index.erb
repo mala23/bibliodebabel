@@ -1,0 +1,5 @@
+<section>
+  <% @links.each do |link| %>
+    <li><a href="<%= link.uri %>"><%= link.title %></a></li>
+  <% end %>
+</section>
