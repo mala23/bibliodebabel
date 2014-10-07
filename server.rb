@@ -32,7 +32,11 @@ class BDB < Sinatra::Base
   post '/link' do
     uri = params["uri"]
     title = params["title"]
-    Link.create(:uri => uri, :title => title)
+    tags = params["tags"].split(" ").map do |tag|
+    # this will either find the tag or if nonexisting create it
+    Tag.first_or_create(:text => tag)
+  end
+    Link.create(:uri => uri, :title => title, :tags => tags)
     redirect to('/')
   end
 

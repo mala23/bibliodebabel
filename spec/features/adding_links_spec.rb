@@ -21,4 +21,24 @@ feature "User adds new link" do
 
 	end
 
+	scenario "User adds new link with some tags" do
+		visit "/"
+		add_link("http://www.makersacademy.com/",
+					"Makers Academy",
+					['education', 'ruby'])
+		link = Link.first
+		expect(link.tags.map(&:text)).to include("education")
+		expect(link.tags.map(&:text)).to include("ruby")
+	end
+
+	def add_link(uri, title, tags = [])
+		within('#new-link') do
+			fill_in 'uri', :with => uri
+			fill_in 'title', :with => title
+			# tags will be spaced seperately
+			fill_in 'tags', :with => tags.join(' ')
+			click_button 'Add link'
+		end
+	end
+
 end
