@@ -8,6 +8,7 @@ require 'sinatra'
 require 'data_mapper'
 require 'haml'
 require './app/helpers/user_helper'
+require 'rack-flash'
 env = ENV["RACK_ENV"] || "development"
 
 DataMapper.setup(:default, "postgres://localhost/bibliodebabel_#{env}")
@@ -26,6 +27,7 @@ class BDB < Sinatra::Base
 	set :public_dir, settings.root + '/app/public/'
   set :session_secret, 'ooc-woox-rom-ac'
 	enable :sessions
+  use Rack::Flash
 
   helpers ApplicationHelpers
 	# set :port, 4567
@@ -53,15 +55,23 @@ class BDB < Sinatra::Base
   end
 
   get '/users/new' do
+    @user = User.new
     haml :'users/new'
   end
 
   post '/users' do
-    User.create(:email => params[:email],
+    @user = User.new(:email => params[:email],
           :password => params[:password],
           :password_confirmation => params[:password_confirmation])
-    session[:user_id] = User.id
-    redirect to('/')
+    # passwords match
+    if @user.save
+      session[:user_id] = @user.id
+      redirect to('/')
+    # passwords don't match
+    else
+      flash[:notice] = "Sorry, your passwords don't match"
+      haml :'users/new'
+    end
   end
 
   # start the server if ruby file executed directly

@@ -13,6 +13,9 @@
       %h1 Biblioteca de Babel
       %h2 a bookmark manager
       - if current_user
-        %p
-        = Welcome current_user
-    = yield
+        %section#current_user
+          Welcome, #{current_user.email}
+      -if flash[:notice]
+        %section#notice
+          #{flash[:notice]}
+    =yield

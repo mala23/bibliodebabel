@@ -10,6 +10,7 @@ group :development, :test do
 	gem 'rspec'
 	gem 'data_mapper'
 	gem 'bcrypt-ruby'
+	gem 'rack-flash3'
 	gem 'dm-postgres-adapter'
 	gem 'database_cleaner'
 	gem 'haml'
