@@ -1,0 +1,18 @@
+!!!
+%html
+  %head
+    %title Biblioteca de Babel
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+    / Main CSS
+    %link{:href => "styles/css/main.css", :media => "screen", :rel => "stylesheet"}/
+    %script{:src => "//use.typekit.net/gjy5lgt.js"}
+    :javascript
+      try{Typekit.load();}catch(e){}
+  %body
+    %header.flexbox-item
+      %h1 Biblioteca de Babel
+      %h2 a bookmark manager
+      - if current_user
+        %p
+        = Welcome current_user
+    = yield

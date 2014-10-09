@@ -6,11 +6,14 @@ Server file, since this app is fairly simple in structure, controllers are also 
 
 require 'sinatra'
 require 'data_mapper'
+require 'haml'
+require './app/helpers/user_helper'
 env = ENV["RACK_ENV"] || "development"
 
 DataMapper.setup(:default, "postgres://localhost/bibliodebabel_#{env}")
 
 require './app/models/link'
+require './app/models/user'
 
 DataMapper.finalize
 
@@ -21,12 +24,15 @@ class BDB < Sinatra::Base
 
 	set :views, settings.root + '/app/views/'
 	set :public_dir, settings.root + '/app/public/'
+  set :session_secret, 'ooc-woox-rom-ac'
 	enable :sessions
+
+  helpers ApplicationHelpers
 	# set :port, 4567
 
   get '/' do
     @links = Link.all
-    erb :index
+    haml :index
   end
 
   post '/link' do
@@ -43,7 +49,19 @@ class BDB < Sinatra::Base
   get '/tags/:text' do
     tag = Tag.first(:text => params[:text])
     @links = tag ? tag.links : []
-    erb :index
+    haml :index
+  end
+
+  get '/users/new' do
+    haml :'users/new'
+  end
+
+  post '/users' do
+    User.create(:email => params[:email],
+          :password => params[:password],
+          :password_confirmation => params[:password_confirmation])
+    session[:user_id] = User.id
+    redirect to('/')
   end
 
   # start the server if ruby file executed directly

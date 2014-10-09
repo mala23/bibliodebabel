@@ -88,6 +88,8 @@ GEM
     ffi (1.9.5)
     gherkin (2.12.2)
       multi_json (~> 1.3)
+    haml (4.0.5)
+      tilt
     highline (1.6.21)
     json (1.8.1)
     json_pure (1.8.1)
@@ -138,7 +140,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bcrypt
+  bcrypt-ruby
   capybara
   compass
   cucumber
@@ -146,6 +148,7 @@ DEPENDENCIES
   data_mapper
   database_cleaner
   dm-postgres-adapter
+  haml
   launchy
   rspec
   sinatra
