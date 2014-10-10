@@ -1,3 +1,8 @@
+%section#links
+  - @links.each do |link|
+    %li
+      %a{:href => link.uri}= link.title
+
 %section#new-link
   %form{:action => "/link", :method => "post"}
     Uri:
@@ -7,7 +12,3 @@
     Tags:
     %input{:name => "tags", :type => "text"}/
     %input{:type => "submit", :value => "Add link"}/
-%section#links
-  - @links.each do |link|
-    %li
-      %a{:href => link.uri}= link.title

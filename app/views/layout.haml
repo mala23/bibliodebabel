@@ -12,10 +12,11 @@
     %header.flexbox-item
       %h1 Biblioteca de Babel
       %h2 a bookmark manager
-      - if current_user
-        %section#current_user
-          Welcome, #{current_user.email}
-      -if flash[:notice]
-        %section#notice
-          #{flash[:notice]}
+      -if current_user
+        ="Welcome, #{current_user.email}"
+      -if flash[:errors] && !flash[:errors].empty?
+        Sorry, there where the following issues with the submitted form:
+        %ul
+          -flash[:errors].each do |error|
+            %li= error
     =yield

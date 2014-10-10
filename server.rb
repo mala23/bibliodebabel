@@ -6,22 +6,15 @@ Server file, since this app is fairly simple in structure, controllers are also 
 
 require 'sinatra'
 require 'data_mapper'
+require './app/data_mapper_setup'
 require 'haml'
-require './app/helpers/user_helper'
+# require './app/helpers/user_helper'
 require 'rack-flash'
-env = ENV["RACK_ENV"] || "development"
-
-DataMapper.setup(:default, "postgres://localhost/bibliodebabel_#{env}")
-
-require './app/models/link'
-require './app/models/user'
-
-DataMapper.finalize
-
-DataMapper.auto_upgrade!
-
+require_relative './app/helpers/application_helper'
 
 class BDB < Sinatra::Base
+
+  include BensHelper
 
 	set :views, settings.root + '/app/views/'
 	set :public_dir, settings.root + '/app/public/'
@@ -29,7 +22,6 @@ class BDB < Sinatra::Base
 	enable :sessions
   use Rack::Flash
 
-  helpers ApplicationHelpers
 	# set :port, 4567
 
   get '/' do
@@ -69,8 +61,24 @@ class BDB < Sinatra::Base
       redirect to('/')
     # passwords don't match
     else
-      flash[:notice] = "Sorry, your passwords don't match"
+      flash.now[:errors] = @user.errors.full_messages
       haml :'users/new'
+    end
+  end
+
+  get '/sessions/new' do
+    haml :'sessions/new'
+  end
+
+  post '/sessions' do
+    email, password = params[:email], params[:password]
+    user = User.authenticate(email, password)
+    if user
+      session[:user_id] = user.id
+      redirect to('/')
+    else
+      flash[:errors] = ["The email or password is incorrect"]
+      erb :"sessions/new"
     end
   end
 
